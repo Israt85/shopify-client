@@ -1,6 +1,9 @@
 
 import Growth from './Growth/Growth';
+import Lifetime from './Lifetime/Lifetime';
+import Location from './Location/Location';
 import MonthlySale from './MonthlySale/MonthlySale';
+// import NewCustomer from './NewCustomer/NewCustomer';
 import Quarter from './Quarter/Quarter';
 import TotalSales from './TotalSales/TotalSales';
 import Yearly from './Yearly/Yearly';
@@ -33,6 +36,9 @@ const Dashboard = () => {
             <Growth/>
             </div>
            </div>
+           {/* <NewCustomer/> */}
+           <Location/>
+           <Lifetime/>
         </div>
     );
 };

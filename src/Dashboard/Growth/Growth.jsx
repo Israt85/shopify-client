@@ -39,23 +39,29 @@ const Growth = () => {
   useEffect(() => {
     const fetchPieData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/yearly');
+        const response = await axios.get('http://localhost:5000/yearly'); // Adjust the API endpoint as needed
         const data = response.data;
 
+        // Ensure data is sorted by year if needed
+        data.sort((a, b) => a._id.localeCompare(b._id));
+
+        // Calculate growth rates
         const growthRates = data.map((item, index, array) => {
-          if (index === 0) return null; 
+          if (index === 0) return { year: item._id, growthRate: 0 };
           const previousSales = array[index - 1].totalSales;
           const currentSales = item.totalSales;
           const growthRate = ((currentSales - previousSales) / previousSales) * 100;
           return {
             year: item._id,
-            growthRate: growthRate.toFixed(2) 
+            growthRate: growthRate.toFixed(2)
           };
-        }).slice(1);
+        });
+
+        // Prepare data for chart
         setChartData({
           series: [{
             name: 'Growth Rate',
-            data: growthRates.map(item => parseFloat(item.growthRate)) 
+            data: growthRates.map(item => parseFloat(item.growthRate))
           }],
           options: {
             ...chartData.options,
@@ -70,14 +76,15 @@ const Growth = () => {
     };
 
     fetchPieData();
-  }, [chartData]);
+  }, []); // Empty dependency array to run only once
 
   return (
     <div>
+      <h2>Sales Growth Rate Over Time</h2>
       <ReactApexChart
         options={chartData.options}
         series={chartData.series}
-        type="line"
+        type="line" // Line chart type
         height={350}
       />
     </div>
