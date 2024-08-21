@@ -6,7 +6,7 @@ const NewCustomer = () => {
     const [customer, setCustomer] = useState([])
 
     useEffect(()=>{
-        axios.get('http://localhost:5000/newcustomer')
+        axios.get('https://shopify-server-rouge.vercel.app/newcustomer')
         .then(res=>{
             console.log(res.data)
             setCustomer(res.data)
@@ -14,43 +14,66 @@ const NewCustomer = () => {
     },[])
 
     const chartData = {
-        series: [{
-          name: 'New Customers',
-          data: customer.map(item => item.newCustomers) // Extract newCustomers values
-        }],
-        options: {
-          chart: {
-            type: 'bar',
-            stacked: true, // Enable stacking
-            height: 350
-          },
-          plotOptions: {
-            bar: {
-              horizontal: false, // Vertical bars
-              columnWidth: '55%',
-              endingShape: 'rounded'
-            }
-          },
-          xaxis: {
-            categories: customer.map(item => item._id), // Extract _id as x-axis labels
-            title: {
-              text: 'Month'
-            }
-          },
-          yaxis: {
-            title: {
-              text: 'New Customers'
-            }
-          },
-          title: {
-            text: 'New Customers Added Over Time',
-            align: 'left'
+      series: [{
+        name: 'New Customers',
+        data: customer.map(item => item.newCustomers)
+      }],
+      options: {
+        chart: {
+          type: 'area',
+          stacked: true,
+          height: 350,
+          background: '#000' // Set chart background to black
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
           }
+        },
+        xaxis: {
+          categories: customer.map(item => item._id),
+          title: {
+            text: 'Month',
+            style: {
+              color: '#fff' // Set x-axis title color to white
+            }
+          },
+          labels: {
+            style: {
+              colors: '#fff' // Set x-axis labels color to white
+            }
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'New Customers',
+            style: {
+              color: '#fff' // Set y-axis title color to white
+            }
+          },
+          labels: {
+            style: {
+              colors: '#fff' // Set y-axis labels color to white
+            }
+          }
+        },
+        title: {
+          text: 'New Customers Added Over Time',
+          align: 'left',
+          style: {
+            color: '#fff' 
+          }
+        },
+        tooltip: {
+          theme: 'dark'
         }
-      };
+      }
+    };
+    
     return (
         <div>
-        <h2>New Customers Added Over Time (Stacked)</h2>
         <ReactApexChart
           options={chartData.options}
           series={chartData.series}

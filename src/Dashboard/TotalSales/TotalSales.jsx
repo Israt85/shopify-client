@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-
 const TotalSales = () => {
     const [chartData, setChartData] = useState({
         series: [{
@@ -12,26 +11,44 @@ const TotalSales = () => {
         options: {
           chart: {
             type: 'line',
-            height: 350
+            height: 350,
+            background: 'bg-gray-600',
           },
           xaxis: {
-            categories: [] 
-          },
-          title: {
-            text: 'Daily Sales',
-            align: 'left'
+            categories: [],
+            labels: {
+              style: {
+                colors: '#fff' // Set x-axis labels to white
+              }
+            }
           },
           yaxis: {
             title: {
-              text: 'Sales Amount'
+              text: 'Sales Amount',
+              style: {
+                color: '#fff'
+              }
             },
             labels: {
-                formatter: (value) => value.toFixed(0) 
-              }
+              style: {
+                colors: '#fff' // Set y-axis labels to white
+              },
+              formatter: (value) => value.toFixed(0)
+            }
+          },
+          title: {
+            text: 'Daily Sales',
+            align: 'center',
+            style: {
+              color: '#fff' // Set chart title to white
+            }
           },
           tooltip: {
-            x: {
-              format: 'dd/MM/yy'
+            theme: 'dark' // Use a dark theme for the tooltip
+          },
+          legend: {
+            labels: {
+              colors: '#fff' // Set legend labels to white
             }
           }
         }
@@ -40,7 +57,7 @@ const TotalSales = () => {
       useEffect(() => {
         const fetchDailySales = async () => {
           try {
-            const response = await axios.get('http://localhost:5000/dailysale');
+            const response = await axios.get('https://shopify-server-rouge.vercel.app/dailysale');
             const salesData = response.data;
     
             const dates = salesData?.map(sale => sale._id);

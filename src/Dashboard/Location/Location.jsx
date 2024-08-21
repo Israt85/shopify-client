@@ -16,6 +16,13 @@ const Location = () => {
           fill: {
             opacity: 0.8
           },
+          title: {
+            text: 'Geographical Distribution of Customers',
+            align:'center',
+            style: {
+              color: '#fff' // Set title text color to white
+            }
+          },
           responsive: [{
             breakpoint: 480,
             options: {
@@ -23,7 +30,13 @@ const Location = () => {
                 width: 200
               },
               legend: {
-                position: 'bottom'
+                labels: {
+                  colors: '#fff' // Set legend text color to white
+                },
+                
+                position: 'bottom',
+                
+                
               }
             }
           }],
@@ -32,7 +45,7 @@ const Location = () => {
       });
     
       useEffect(() => {
-        axios.get('http://localhost:5000/location')
+        axios.get('https://shopify-server-rouge.vercel.app/location')
           .then(res => {
             const newdata = res?.data;
             console.log(newdata);
@@ -56,7 +69,7 @@ const Location = () => {
     return (
         <div>
       <div id="chart">
-        <ReactApexChart options={chartData.options} series={chartData.series} type="polarArea" height={350} />
+        <ReactApexChart options={chartData.options} series={chartData.series} type="polarArea" height={350} width={500} />
       </div>
     </div>
     );

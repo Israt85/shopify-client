@@ -3,32 +3,46 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const Lifetime = () => {
-    const [chartData, setChartData] = useState({
-        series: [],
+  const [chartData, setChartData] = useState({
+    series: [],
+    options: {
+      chart: {
+        type: 'donut',
+        background: '#000', // Set the background color to black
+      },
+      labels: [], // Labels for each cohort (month-year)
+      title: {
+        text: 'Customer Lifetime Value by Cohorts',
+        align:'center',
+        style: {
+          color: '#fff' // Corrected to 'color' to set the title text to white
+        }
+      },
+      legend: {
+        labels: {
+          colors: '#fff', // Set legend labels to white
+        },
+        position: 'bottom'
+      },
+      responsive: [{
+        breakpoint: 480,
         options: {
           chart: {
-            type: 'donut'
+            width: 200
           },
-          labels: [], // Labels for each cohort (month-year)
-          title: {
-            text: 'Customer Lifetime Value by Cohorts'
-          },
-          responsive: [{
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: 200
-              },
-              legend: {
-                position: 'bottom'
-              }
-            }
-          }]
+          legend: {
+            labels: {
+              colors: '#fff', // Set legend labels to white in the responsive setting
+            },
+            position: 'bottom'
+          }
         }
-      });
-    
+      }]
+    }
+  });
+  
       useEffect(() => {
-        axios.get('http://localhost:5000/lifetime')
+        axios.get('https://shopify-server-rouge.vercel.app/lifetime')
           .then(res => {
             const data = res.data;
     
